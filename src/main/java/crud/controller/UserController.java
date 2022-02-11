@@ -2,13 +2,13 @@ package crud.controller;
 
 import crud.model.User;
 import crud.service.UserService;
-//import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -40,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping()
-    public String createUser(@ModelAttribute("user") /*@Valid*/ User user/*, BindingResult bindingResult*/) {
-        /*if(bindingResult.hasErrors())
-            return "new";*/
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            return "new";
         userService.createUser(user);
         return "redirect:/";
     }
@@ -54,10 +54,10 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") /*@Valid*/ User user, /*BindingResult bindingResult,*/
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @PathVariable("id") Long id) {
-        /*if(bindingResult.hasErrors())
-            return "edit";*/
+        if(bindingResult.hasErrors())
+            return "edit";
         userService.editUser(id, user);
         return "redirect:/";
     }
